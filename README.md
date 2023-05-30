@@ -19,4 +19,4 @@
 - 유용한 강의
     - [생활코딩 자바스크립트](https://www.youtube.com/watch?v=dPRtcRwKo-Y&list=PLuHgQVnccGMBB348PWRN0fREzYcYgFybf) (무료)
     - [노마드 코더 바닐라 JS로 크롬 앱 만들기](https://nomadcoders.co/javascript-for-beginners) (무료)
-- 과제 >> [링크](https://github.com/geezers-io/todo-app-assignment/tree/main/js)
+- 과제 >> [링크](https://github.com/geezers-io/todo-app-assignment/tree/js)

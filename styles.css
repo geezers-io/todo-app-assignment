@@ -1,0 +1,54 @@
+:root {
+  --color-white: #fdfffe;
+  --color-gray-0: #f3f1f4;
+  --color-gray-1: #ccc;
+  --color-gray-2: #aaa;
+  --color-black: #070906;
+  --color-neon: #68EACC;
+  --color-blue: #497BEB;
+  --color-purple: #8d4ae6;
+  --color-red: #e64d3c;
+
+  --border-radius: 2px;
+}
+
+*,
+*::before,
+*::after {
+   box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100vh;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom, var(--color-neon) 0%, var(--color-blue) 100%);
+  font-family: '-apple-system', sans-serif;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+}
+button:hover,
+button:focus-visible {
+  filter: brightness(110%);
+}
+button:active {
+  filter: brightness(90%);
+}
+
+#todoApp {
+}

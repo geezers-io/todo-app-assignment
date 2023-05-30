@@ -1,0 +1,11 @@
+# production
+/build
+/dist
+
+# misc
+.idea/
+.vscode/
+.DS_Store
+*.pem
+Thumbs.db
+.e2edebug.png

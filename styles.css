@@ -57,5 +57,5 @@ button:active {
   filter: brightness(90%);
 }
 
-#todoApp {
+.todo-app {
 }

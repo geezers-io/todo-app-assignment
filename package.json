@@ -1,0 +1,26 @@
+{
+  "name": "todo-app-assignment",
+  "version": "1.0.0",
+  "description": "프론트엔드 입문자를 위한 Todo App 만들기 과제",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geezers-io/todo-app-assignment.git"
+  },
+  "keywords": [
+    "html",
+    "css",
+    "js",
+    "javascript"
+  ],
+  "author": "bear-bear-bear",
+  "license": "ISC",
+  "homepage": "geezers-io.github.io/todo-app-assignment/",
+  "devDependencies": {
+    "gh-pages": "^5.0.0",
+    "prettier": "^2.8.8"
+  }
+}

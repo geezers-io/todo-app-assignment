@@ -11,12 +11,12 @@
 
   --border-radius: 2px;
   --box-shadow:
-      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-      0 12.5px 10px rgba(0, 0, 0, 0.06),
-      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-      0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-      0 100px 80px rgba(0, 0, 0, 0.12);
+      0 0.18rem 0.14rem rgba(0, 0, 0, 0.034),
+      0 0.42rem 0.33rem rgba(0, 0, 0, 0.048),
+      0 0.78rem 0.63rem rgba(0, 0, 0, 0.06),
+      0 1.39rem 1.12rem rgba(0, 0, 0, 0.072),
+      0 2.61rem 2.09rem rgba(0, 0, 0, 0.086),
+      0 6.25rem 5rem rgba(0, 0, 0, 0.12);
 }
 
 *,
@@ -58,19 +58,19 @@ button:active {
 }
 
 .todo-app {
-  width: 340px;
+  width: 21.25rem;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 25px 20px;
+  gap: 1.25rem;
+  padding: 1.56rem 1.25rem;
   background: var(--color-white);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
 }
 
 .todo-app h1 {
-  font-size: 26px;
+  font-size: 1.63em;
   font-weight: bold;
 }
 
@@ -78,32 +78,31 @@ button:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 4px;
+  gap: 0.25em;
 }
 
 /**
  * header
  */
 .todo-app header {
-  height: 40px;
+  height: 2.5em;
 }
 
 .todo-app header .add-input {
   flex: 1;
   height: 100%;
-  padding: 10px;
+  padding: 0.63em;
   border: 1px solid var(--color-gray-1);
-  font-size: 16px;
+  font-size: 1rem;
 }
 .todo-app header .add-input::placeholder {
   color: var(--color-gray-2);
 }
 
 .todo-app header .add-button {
-  width: 40px;
+  width: 2.5em;
   height: 100%;
   background: center / contain no-repeat url("/plus.5ab5b860.svg"), var(--color-purple);
-  color: white;
 }
 
 /**
@@ -112,22 +111,22 @@ button:active {
 .todo-app .todos {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  height: 180px;
-  max-height: 180px;
+  gap: 0.38em;
+  height: 11.25em;
+  max-height: 11.25em;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-gray-1);
 }
 .todo-app .todos::-webkit-scrollbar {
-  width: 10px;
+  width: 0.63em;
 }
 .todo-app .todos::-webkit-scrollbar-track {
   background-color: var(--color-white);
 }
 .todo-app .todos::-webkit-scrollbar-thumb {
   border-radius: 6px;
-  border: var(--border-radius) solid var(--color-white);
+  border: 1px solid var(--color-white);
   background-color: var(--color-gray-2);
 }
 
@@ -135,14 +134,14 @@ button:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 40px;
+  min-height: 2.5em;
   background-color: var(--color-gray-0);
   min-width: 0;
 }
 
 .todo-app .todos .todo p {
   flex: 1;
-  padding: 0 10px;
+  padding: 0 0.63em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -150,7 +149,7 @@ button:active {
 
 .todo-app .todos .todo .delete-button {
   height: 100%;
-  width: 40px;
+  width: 2.5em;
   background: center / 1.2em no-repeat url("/delete.13a5b1c5.svg"), var(--color-red);
   opacity: 0;
   will-change: opacity;
@@ -167,15 +166,27 @@ button:active {
 }
 
 .todo-app footer .remain-tasks {
-  font-size: 16px;
 }
 
 .todo-app footer .clear-button {
-  padding: 8px;
-  font-size: 15px;
-  letter-spacing: 0.5px;
+  padding: 0.5em;
+  font-size: 0.94rem;
+  letter-spacing: 0.03rem;
   color: var(--color-white);
   background-color: var(--color-purple);
+}
+
+@media screen and (max-width: 600px), screen and (max-width: 600px) {
+  .todo-app {
+    width: 100%;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  .todo-app .todos {
+    height: 15.63rem;
+    max-height: 15.63rem;
+  }
 }
 
 

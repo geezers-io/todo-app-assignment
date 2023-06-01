@@ -118,7 +118,193 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.js":[function(require,module,exports) {
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+/**
+ * @typedef {Object} TodoRaw
+ * @property {string} id
+ * @property {string} content
+ */
+/**
+ * @typedef {Object} ClassNames
+ * @property {string} $todos
+ * @property {string} $todo
+ * @property {string} $addInput
+ * @property {string} $addButton
+ * @property {string} $deleteButton
+ * @property {string} $clearButton
+ * @property {string} $remainCount
+ */
+/**
+ * @typedef {function} generateTodoEl
+ * @param {string} content
+ * @return {HTMLElement}
+ */
+/**
+ * @param {string} appId - components classNames
+ * @param {ClassNames} classNames - components classNames
+ * @param {generateTodoEl} generateTodoEl - todo element generator
+ */
+function activateTodoApp(appId, classNames, generateTodoEl) {
+  var app = document.getElementById(appId);
+  if (!app) {
+    throw new Error("App node that maps to id \"".concat(appId, "\" not found."));
+  }
+  function findComponent(className) {
+    var node = app.querySelector(".".concat(className));
+    if (!node) {
+      throw new Error("Component node that maps to className \"".concat(className, "\" not found."));
+    }
+    return node;
+  }
+  var components = {
+    $todos: findComponent(classNames.$todos),
+    $addInput: findComponent(classNames.$addInput),
+    $addButton: findComponent(classNames.$addButton),
+    $clearButton: findComponent(classNames.$clearButton),
+    $remainCount: findComponent(classNames.$remainCount)
+  };
+  function renderRemainCount() {
+    components.$remainCount.textContent = components.$todos.children.length.toString();
+  }
+  var storage = {
+    get todos() {
+      try {
+        var _JSON$parse;
+        return (_JSON$parse = JSON.parse(localStorage.getItem(appId))) !== null && _JSON$parse !== void 0 ? _JSON$parse : [];
+      } catch (_unused) {
+        return [];
+      }
+    },
+    set todos(newTodos) {
+      localStorage.setItem(appId, JSON.stringify(newTodos));
+    }
+  };
+  function syncStorage(_ref) {
+    var type = _ref.type,
+      payload = _ref.payload;
+    switch (type) {
+      case 'add':
+        storage.todos = [payload.newTodo].concat(_toConsumableArray(storage.todos));
+        break;
+      case 'remove':
+        storage.todos = storage.todos.filter(function (todo) {
+          return todo.id !== payload.id;
+        });
+        break;
+      case 'clear':
+        storage.todos = [];
+        break;
+      case 'initialize':
+        var fragment = document.createDocumentFragment();
+        storage.todos.forEach(function (_ref2) {
+          var id = _ref2.id,
+            content = _ref2.content;
+          var todo = generateTodoEl(content);
+          todo.id = id;
+          fragment.appendChild(todo);
+        });
+        components.$todos.prepend(fragment);
+        break;
+      default:
+        throw new Error("Invalid syncStorage type: \"".concat(type, "\""));
+    }
+  }
+  function attachAddHandlers() {
+    var generateId = function generateId() {
+      var _window$crypto;
+      var cryptoObj = (_window$crypto = window.crypto) !== null && _window$crypto !== void 0 ? _window$crypto : window.msCrypto; /* ie11 */
+      var biteArray = new Uint32Array(1);
+      return cryptoObj.getRandomValues(biteArray)[0].toString();
+    };
+    var add = function add() {
+      var content = components.$addInput.value.trim();
+      if (!content) return;
+      var id = generateId();
+      var todo = generateTodoEl(content);
+      todo.id = id;
+      components.$todos.prepend(todo);
+      syncStorage({
+        type: 'add',
+        payload: {
+          newTodo: {
+            id: id,
+            content: content
+          }
+        }
+      });
+      components.$addInput.value = '';
+      renderRemainCount();
+    };
+    components.$addButton.addEventListener('click', add);
+    components.$addInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.isComposing) {
+        add();
+      }
+    });
+  }
+  function attachDeleteHandler() {
+    components.$todos.addEventListener('click', function (event) {
+      if (!event.target.classList.contains(classNames.$deleteButton)) return;
+      var todo = event.target.closest(".".concat(classNames.$todo));
+      if (!todo) return;
+      todo.remove();
+      syncStorage({
+        type: 'remove',
+        payload: {
+          id: todo.id
+        }
+      });
+      renderRemainCount();
+    });
+  }
+  function attachClearAllHandler() {
+    components.$clearButton.addEventListener('click', function () {
+      components.$todos.innerHTML = '';
+      components.$addInput.value = '';
+      syncStorage({
+        type: 'clear'
+      });
+      renderRemainCount();
+    });
+  }
+  syncStorage({
+    type: 'initialize'
+  });
+  attachAddHandlers();
+  attachDeleteHandler();
+  attachClearAllHandler();
+  renderRemainCount();
+}
+document.addEventListener('DOMContentLoaded', function () {
+  /** @type {ClassNames} */
+  var classNames = {
+    $todos: 'todos',
+    $todo: 'todo',
+    $addButton: 'add-button',
+    $addInput: 'add-input',
+    $deleteButton: 'delete-button',
+    $clearButton: 'clear-button',
+    $remainCount: 'remain-tasks-count'
+  };
 
+  /** @type {generateTodoEl} */
+  var generateTodoEl = function generateTodoEl(content) {
+    var li = document.createElement('li');
+    li.className = classNames.$todo;
+    var p = document.createElement('p');
+    p.textContent = content;
+    var button = document.createElement('button');
+    button.className = classNames.$deleteButton;
+    li.append(p, button);
+    return li;
+  };
+  activateTodoApp('todoApp', classNames, generateTodoEl);
+});
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -144,7 +330,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58177" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56688" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

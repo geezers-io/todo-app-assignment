@@ -168,9 +168,6 @@ function activateTodoApp(appId, classNames, generateTodoEl) {
     $clearButton: findComponent(classNames.$clearButton),
     $remainCount: findComponent(classNames.$remainCount)
   };
-  function renderRemainCount() {
-    components.$remainCount.textContent = components.$todos.children.length.toString();
-  }
   var storage = {
     get todos() {
       try {
@@ -213,6 +210,9 @@ function activateTodoApp(appId, classNames, generateTodoEl) {
       default:
         throw new Error("Invalid syncStorage type: \"".concat(type, "\""));
     }
+  }
+  function renderRemainCount() {
+    components.$remainCount.textContent = components.$todos.children.length.toString();
   }
   function attachAddHandlers() {
     var generateId = function generateId() {

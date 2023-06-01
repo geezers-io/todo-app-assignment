@@ -1,4 +1,9 @@
 /**
+ * @typedef {Object} TodoRaw
+ * @property {string} id
+ * @property {string} content
+ */
+/**
  * @typedef {Object} ClassNames
  * @property {string} $todos
  * @property {string} $todo
@@ -43,17 +48,69 @@ function activateTodoApp(appId, classNames, generateTodoEl) {
     $remainCount: findComponent(classNames.$remainCount),
   };
 
+  const storage = {
+    get todos() {
+      try {
+        return JSON.parse(localStorage.getItem(appId)) ?? [];
+      } catch {
+        return [];
+      }
+    },
+    set todos(newTodos) {
+      localStorage.setItem(appId, JSON.stringify(newTodos));
+    },
+  };
+
+  function syncStorage({ type, payload }) {
+    switch (type) {
+      case 'add':
+        storage.todos = [payload.newTodo, ...storage.todos];
+        break;
+      case 'remove':
+        storage.todos = storage.todos.filter(todo => todo.id !== payload.id);
+        break;
+      case 'clear':
+        storage.todos = [];
+        break;
+      case 'initialize':
+        const fragment = document.createDocumentFragment();
+        storage.todos.forEach(({ id, content }) => {
+          const todo = generateTodoEl(content);
+          todo.id = id;
+          fragment.appendChild(todo);
+        });
+        components.$todos.prepend(fragment);
+        break;
+      default:
+        throw new Error(`Invalid syncStorage type: "${type}"`);
+    }
+  }
+
   function renderRemainCount() {
-    components.$remainCount.textContent = `${components.$todos.children.length}`;
+    components.$remainCount.textContent = components.$todos.children.length.toString();
   }
 
   function attachAddHandlers() {
+    const generateId = () => {
+      const cryptoObj = window.crypto ?? window.msCrypto; /* ie11 */
+      const biteArray = new Uint32Array(1);
+
+      return cryptoObj.getRandomValues(biteArray)[0].toString();
+    };
+
     const add = () => {
       const content = components.$addInput.value.trim();
       if (!content) return;
 
+      const id = generateId();
       const todo = generateTodoEl(content);
-      components.$todos.insertBefore(todo, components.$todos.children[0]);
+      todo.id = id;
+
+      components.$todos.prepend(todo);
+      syncStorage({
+        type: 'add',
+        payload: { newTodo: { id, content } },
+      });
 
       components.$addInput.value = '';
       renderRemainCount();
@@ -68,13 +125,17 @@ function activateTodoApp(appId, classNames, generateTodoEl) {
   }
 
   function attachDeleteHandler() {
-    components.$todos.addEventListener('click', ({ target }) => {
-      if (!target.classList.contains(classNames.$deleteButton)) return;
+    components.$todos.addEventListener('click', event => {
+      if (!event.target.classList.contains(classNames.$deleteButton)) return;
 
-      const todo = target.closest(`.${classNames.$todo}`);
+      const todo = event.target.closest(`.${classNames.$todo}`);
       if (!todo) return;
 
       todo.remove();
+      syncStorage({
+        type: 'remove',
+        payload: { id: todo.id },
+      });
       renderRemainCount();
     });
   }
@@ -83,13 +144,16 @@ function activateTodoApp(appId, classNames, generateTodoEl) {
     components.$clearButton.addEventListener('click', () => {
       components.$todos.innerHTML = '';
       components.$addInput.value = '';
+      syncStorage({ type: 'clear' });
       renderRemainCount();
     });
   }
 
+  syncStorage({ type: 'initialize' });
   attachAddHandlers();
   attachDeleteHandler();
   attachClearAllHandler();
+  renderRemainCount();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

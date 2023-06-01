@@ -118,7 +118,188 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"index.js":[function(require,module,exports) {
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i.return && (_r = _i.return(), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+var _registerApp = /*#__PURE__*/new WeakSet();
+var _registerComponents = /*#__PURE__*/new WeakSet();
+var _renderRemainCount = /*#__PURE__*/new WeakSet();
+var _attachAddHandlers = /*#__PURE__*/new WeakSet();
+var _attachDeleteHandler = /*#__PURE__*/new WeakSet();
+var _attachClearAllHandler = /*#__PURE__*/new WeakSet();
+var _exception = /*#__PURE__*/new WeakSet();
+/**
+ * @typedef {Object} ClassNames
+ * @property {string} $todos
+ * @property {string} $todo
+ * @property {string} $addInput
+ * @property {string} $addButton
+ * @property {string} $deleteButton
+ * @property {string} $clearButton
+ * @property {string} $remainCount
+ */
+/**
+ * @typedef {function} generateTodoEl
+ * @param {string} content
+ * @return {HTMLElement}
+ */
+/**
+ * @class
+ * @property {() => void} active
+ */
+var TodoApp = /*#__PURE__*/function () {
+  /**
+   * @param {string} appId - components classNames
+   * @param {ClassNames} classNames - components classNames
+   * @param {generateTodoEl} generateTodoEl - todo element generator
+   */
+  function TodoApp(_appId, _classNames, generateTodoEl) {
+    _classCallCheck(this, TodoApp);
+    _classPrivateMethodInitSpec(this, _exception);
+    _classPrivateMethodInitSpec(this, _attachClearAllHandler);
+    _classPrivateMethodInitSpec(this, _attachDeleteHandler);
+    _classPrivateMethodInitSpec(this, _attachAddHandlers);
+    _classPrivateMethodInitSpec(this, _renderRemainCount);
+    _classPrivateMethodInitSpec(this, _registerComponents);
+    _classPrivateMethodInitSpec(this, _registerApp);
+    this.classNames = _classNames;
+    this.generateTodoEl = generateTodoEl;
+    _classPrivateMethodGet(this, _registerApp, _registerApp2).call(this, _appId);
+    _classPrivateMethodGet(this, _registerComponents, _registerComponents2).call(this, _classNames);
+    _classPrivateMethodGet(this, _renderRemainCount, _renderRemainCount2).call(this);
+  }
+  _createClass(TodoApp, [{
+    key: "active",
+    value: function active() {
+      _classPrivateMethodGet(this, _attachAddHandlers, _attachAddHandlers2).call(this);
+      _classPrivateMethodGet(this, _attachDeleteHandler, _attachDeleteHandler2).call(this);
+      _classPrivateMethodGet(this, _attachClearAllHandler, _attachClearAllHandler2).call(this);
+    }
+  }]);
+  return TodoApp;
+}();
+function _registerApp2(appId) {
+  this.$app = document.getElementById(appId);
+  if (!this.$app) {
+    _classPrivateMethodGet(this, _exception, _exception2).call(this, {
+      type: 'APP_NOT_FOUND',
+      payload: {
+        id: appId
+      }
+    });
+  }
+}
+function _registerComponents2(classNames) {
+  var _this = this;
+  var excepts = new Set(['$todo', '$deleteButton']);
+  Object.entries(classNames).forEach(function (_ref) {
+    var _ref2 = _slicedToArray(_ref, 2),
+      fieldName = _ref2[0],
+      /*String*/className = _ref2[1];
+    if (excepts.has(fieldName)) return;
+    var node = _this.$app.querySelector(".".concat(className));
+    if (!node) {
+      _classPrivateMethodGet(_this, _exception, _exception2).call(_this, {
+        type: 'NODE_NOT_FOUND',
+        payload: {
+          className: className
+        }
+      });
+    }
+    _this[fieldName] = node;
+  });
+}
+function _renderRemainCount2() {
+  this.$remainCount.textContent = "".concat(this.$todos.children.length);
+}
+function _attachAddHandlers2() {
+  var _this2 = this;
+  var add = function add() {
+    var content = _this2.$addInput.value.trim();
+    if (!content) return;
+    var todo = _this2.generateTodoEl(content);
+    _this2.$todos.insertBefore(todo, _this2.$todos.children[0]);
+    _this2.$addInput.value = '';
+    _classPrivateMethodGet(_this2, _renderRemainCount, _renderRemainCount2).call(_this2);
+  };
+  this.$addButton.addEventListener('click', add);
+  this.$addInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.isComposing) {
+      add();
+    }
+  });
+}
+function _attachDeleteHandler2() {
+  var _this3 = this;
+  this.$todos.addEventListener('click', function (_ref3) {
+    var target = _ref3.target;
+    if (!target.classList.contains(_this3.classNames.$deleteButton)) return;
+    var todo = target.closest(".".concat(_this3.classNames.$todo));
+    if (!todo) return;
+    todo.remove();
+    _classPrivateMethodGet(_this3, _renderRemainCount, _renderRemainCount2).call(_this3);
+  });
+}
+function _attachClearAllHandler2() {
+  var _this4 = this;
+  this.$clearButton.addEventListener('click', function () {
+    _this4.$todos.innerHTML = '';
+    _this4.$addInput.value = '';
+    _classPrivateMethodGet(_this4, _renderRemainCount, _renderRemainCount2).call(_this4);
+  });
+}
+function _exception2(_ref4) {
+  var type = _ref4.type,
+    payload = _ref4.payload;
+  switch (type) {
+    case 'APP_NOT_FOUND':
+      {
+        throw new Error("App node that maps to id \"".concat(payload.id, "\" not found."));
+      }
+    case 'NODE_NOT_FOUND':
+      {
+        throw new Error("Component node that maps to className \"".concat(payload.className, "\" not found."));
+      }
+  }
+}
+document.addEventListener('DOMContentLoaded', function () {
+  /** @type {ClassNames} */
+  var classNames = {
+    $todos: 'todos',
+    $todo: 'todo',
+    $addButton: 'add-button',
+    $addInput: 'add-input',
+    $deleteButton: 'delete-button',
+    $clearButton: 'clear-button',
+    $remainCount: 'remain-tasks-count'
+  };
 
+  /** @type {generateTodoEl} */
+  var generateTodoEl = function generateTodoEl(content) {
+    var li = document.createElement('li');
+    li.className = classNames.$todo;
+    var p = document.createElement('p');
+    p.textContent = content;
+    var button = document.createElement('button');
+    button.className = classNames.$deleteButton;
+    li.append(p, button);
+    return li;
+  };
+  var todoApp = new TodoApp('todoApp', classNames, generateTodoEl);
+  todoApp.active();
+});
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -144,7 +325,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51044" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55298" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
@@ -289,4 +470,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.js"], null)
-//# sourceMappingURL=/todo-app-assignment.e31bb0bc.js.map
+//# sourceMappingURL=todo-app-assignment.e31bb0bc.js.map

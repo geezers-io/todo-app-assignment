@@ -4,6 +4,7 @@
   "description": "프론트엔드 입문자를 위한 Todo App 만들기 과제",
   "main": "index.js",
   "scripts": {
+    "start": "parcel index.html -p 3000",
     "build": "parcel build --public-url . index.html -d dist",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d dist"

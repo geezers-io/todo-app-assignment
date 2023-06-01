@@ -103,7 +103,6 @@ button:active {
   width: 40px;
   height: 100%;
   background: center / contain no-repeat url("./svg/plus.svg"), var(--color-purple);
-  color: white;
 }
 
 /**

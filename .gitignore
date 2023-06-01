@@ -1,6 +1,12 @@
+# dependencies
+node_modules/
+
 # production
 /build
 /dist
+
+# cache
+.cache/
 
 # misc
 .idea/
@@ -9,3 +15,6 @@
 *.pem
 Thumbs.db
 .e2edebug.png
+
+# debug
+yarn-error.log*

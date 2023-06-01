@@ -30,4 +30,5 @@ yarn deploy
   - [CSS Flex(Flexible Box) 완벽 가이드](https://heropy.blog/2018/11/24/css-flexible-box/)
 
 ## 요구 사항
-![img](./requirements-1.png)
+![img](./requirements.png)
+![img](./advanced.png)

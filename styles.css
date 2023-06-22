@@ -10,13 +10,6 @@
   --color-red: #e64d3c;
 
   --border-radius: 2px;
-  --box-shadow:
-      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-      0 12.5px 10px rgba(0, 0, 0, 0.06),
-      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-      0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-      0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
 *,
@@ -58,4 +51,56 @@ button:active {
 }
 
 .todo-app {
+  width: 350px/*임시*/;
+  max-width: 100% /*임시*/;
+  padding: 10px/*임시*/;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  box-shadow: 
+    0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
 }
+
+.todo-app h1 {
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--color-black);
+  margin-bottom: 20px;
+}
+
+.todo-app input {
+  box-sizing: border-box;
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-1);
+  padding: 10.75px 11px;
+  width: 256px;
+  height: 40px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.todo-app li {
+  background: var(--color-gray-0);
+  padding: 12px 40px 12px 0px;
+  margin-bottom: 10px;
+}
+
+.todo-app footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todo-app button {
+  flex-direction: row;
+  background: var(--color-purple);
+  border-radius: 2px;
+  padding: 8px;
+  letter-spacing: 0.5px;
+  color: var(--color-white);
+}
+

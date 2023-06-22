@@ -51,9 +51,9 @@ button:active {
 }
 
 .todo-app {
-  width: 350px/*임시*/;
-  max-width: 100% /*임시*/;
-  padding: 10px/*임시*/;
+  width: 350px;
+  max-width: 100%;
+  padding: 10px;
   background: var(--color-white);
   border-radius: var(--border-radius);
   box-shadow: 

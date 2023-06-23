@@ -12,30 +12,33 @@
 <body>
   <article  class="todo-app">
     <h1>Todo App</h1>
-    <header class="subtitles-header">
+  <header class="subtitles-header">
+    <input class="plus-input" placeholder="Add your new todo"/>
+    <button class="plus-button"></button>
+  </header>
 
-    <input placeholder="Add your new todo"/>
-    <button class="plus-box"></button>
-    </header>
+    <ul class="todo-app-list">
+      <li class="todo-list"><p>Buy a new gaming laptop</p>
+        <button class="delete-button"></button>
+      </li>
+      <li class="todo-list"><p>Complete a previous task</p></li>
+      <li class="todo-list"><p>Create video for Youtube</p></li>
+      <li class="todo-list"><p>Create a new portfolio site</p></li>
+      <li class="todo-list"><p>Go grocery shopping</p></li>
+      <li class="todo-list"><p>Finish work report</p></li>
+      <li class="todo-list"><p>Create a new portfolio site</p></li>
 
-    <ul>
-      <div class="scroll-bar" style="overflow-y: scroll; height:200px;">
-      <li>Buy a new gaming laptop</li>
-      <li>Complete a previous task</li>
-      <li>Create video for Youtube</li>
-      <li>Create a new portfolio site</li>
-      <li>Go grocery shopping</li>
-      <li>Finish work report</li>
-      <li>Create a new portfolio site</li>
-      <li>Call the dentist to schedule an appointment</li>
-      <li>Clean the house</li>
+      <li class="todo-list" title="Call the dentist to schedule an appointment">
+        <p>Call the dentist to schedule an appointment</p></li>
+
+      <li class="todo-list"><p>Clean the house</p></li>
     </div>
     </ul>
 
     
     <footer>
       <p>You have 9 pending tasks</p>
-      <button class="clear-all">Clear All</button>
+      <button class="clear-button">Clear All</button>
     </footer>
   </article>
 </body>

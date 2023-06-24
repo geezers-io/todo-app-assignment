@@ -152,11 +152,16 @@ button:active {
 
 /* footer */
 
+.todo-app footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25em;
+}
 .todo-app footer .clear-button {
   padding: 8px;
   font-size: 15px;
   letter-spacing: 1px;
   color: var(--color-white);
   background-color: var(--color-purple);
-  margin-left: 200px;
 }

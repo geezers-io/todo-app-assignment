@@ -10,13 +10,6 @@
   --color-red: #e64d3c;
 
   --border-radius: 2px;
-  --box-shadow:
-      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-      0 12.5px 10px rgba(0, 0, 0, 0.06),
-      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
-      0 41.8px 33.4px rgba(0, 0, 0, 0.086),
-      0 100px 80px rgba(0, 0, 0, 0.12);
 }
 
 *,
@@ -58,4 +51,117 @@ button:active {
 }
 
 .todo-app {
+  width: 340px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 25px 20px;
+  background: var(--color-white);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.todo-app h1 {
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.todo-app .subtitles-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25em;
+}
+
+/* header */
+
+.todo-app header {
+  height: 2.5em;
+}
+
+.todo-app header .plus-input {
+  flex: 1;
+  height: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-gray-1);
+  font-size: 16px;
+}
+.todo-app header .plus-input::placeholder {
+  color: var(--color-gray-2);
+}
+
+.todo-app header .plus-button {
+  width: 2.5em;
+  height: 100%;
+  background: center / contain no-repeat url("./svg/plus.svg"), var(--color-purple);
+}
+
+/* todo-app-list */
+
+.todo-app .todo-app-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  height: 200px;
+  max-height: 200px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gray-1);
+}
+.todo-app .todo-app-list::-webkit-scrollbar {
+  width: 10px;
+}
+.todo-app .todo-app-list::-webkit-scrollbar-track {
+  background-color: var(--color-white);
+}
+.todo-app .todo-app-list::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  border: 1px solid var(--color-white);
+  background-color: var(--color-gray-2);
+}
+
+.todo-app .todo-app-list .todo-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 2.5em;
+  background-color: var(--color-gray-0);
+  min-width: 0;
+}
+
+.todo-app .todo-app-list .todo-list p {
+  flex: 1;
+  padding: 0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.todo-app .todo-app-list .todo-list .delete-button {
+  height: 100%;
+  width: 2.5em;
+  background: center / 19px no-repeat url("./svg/delete.svg"), var(--color-red);
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 0.3s;
+}
+.todo-app .todo-app-list .todo-list:hover .delete-button {
+  opacity: 1;
+}
+
+/* footer */
+
+.todo-app footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.25em;
+}
+.todo-app footer .clear-button {
+  padding: 8px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--color-white);
+  background-color: var(--color-purple);
 }

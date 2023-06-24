@@ -67,7 +67,7 @@ button:active {
   font-weight: bold;
 }
 
-.todo-app :is(header, footer).subtitles-header {
+.todo-app .subtitles-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -141,16 +141,19 @@ button:active {
 .todo-app .todo-app-list .todo-list .delete-button {
   height: 100%;
   width: 2.5em;
-  background: center / contain no-repeat url("./svg/delete.svg"), var(--color-red);
+  background: center / 19px no-repeat url("./svg/delete.svg"), var(--color-red);
+  opacity: 0;
+  will-change: opacity;
+  transition: opacity 0.3s;
 }
-.todo-app .todos .todo:hover .delete-button {
+.todo-app .todo-app-list .todo-list:hover .delete-button {
   opacity: 1;
 }
 
 /* footer */
 
 .todo-app footer .clear-button {
-  padding: 0.5em;
+  padding: 8px;
   font-size: 15px;
   letter-spacing: 1px;
   color: var(--color-white);
